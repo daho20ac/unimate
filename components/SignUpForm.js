@@ -112,7 +112,7 @@ function SignUpForm() {
         style={styles.inputField}
       />
     </View>
-{/*
+
     <Picker
         selectedValue={type}
         style={{ height: 50, width: 150, flex: 1 }}
@@ -122,11 +122,11 @@ function SignUpForm() {
         <Picker.Item label="Student" value="student" />
         <Picker.Item label="Tutor" value="tutor" />
     </Picker>
-*/}
+
     <View style={styles.buttonContainer}>
     <TouchableOpacity title="Pick an image from camera roll" onPress={pickImage} style={styles.button}>
     <Text style={styles.buttonText}>Choose a profile picture</Text>
-    {image && <Image source={{ uri: image }} />}
+
         </TouchableOpacity>
        
 
