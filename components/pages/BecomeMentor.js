@@ -35,8 +35,7 @@ function BecomeMentor () {
         const [userProfile, setUserProfile] = useState('')
         const [hourlyWage, setHourlyWage] = useState('')
         const [courses, setCourses] = useState([])
-        const [mentorProfile, setMentorProfile] = useState('')
-        
+
         //Find bruger profile i database
         useEffect(() => {
             if(!userProfile) {
@@ -48,21 +47,15 @@ function BecomeMentor () {
             
         },[])
 
-        //Find ud af om brugere allerede er mentor
-        useEffect(() => {
-            if(!mentorProfile) {
-                firebaseMentorRef.once("value", (snapshot) => {
-                    let data = snapshot.val();
-                    setMentorProfile(data)
-                   
-                })
-            }
-        },[])
 
-        console.log(mentorProfile)
         //Funtkion der håndterer logikken når der trykkes på 'Create User'
         const handleSubmit = () => {
-        firebase.database().ref('mentors/' + user.uid).set({
+        firebase.database().ref('users/' + user.uid).set({
+          name: userProfile.name,
+          university: userProfile.university,
+          education: userProfile.education,
+          occupation: userProfile.occupation,
+          bio: userProfile.bio,
           hourlyWage: hourlyWage,
           courses: courses
       })

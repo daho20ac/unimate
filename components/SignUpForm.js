@@ -153,7 +153,6 @@ function SignUpForm() {
               value={bio}
               onChangeText={(bio) => setBio(bio)}
               style={styles.inputBioField}
-              multiline={true}
             />
             </View>
 
