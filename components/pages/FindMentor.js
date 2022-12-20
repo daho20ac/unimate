@@ -4,7 +4,7 @@ import firebase from 'firebase/compat';
 import SignUpForm from '../SignUpForm'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function FindTutor () {
+function FindMentor () {
 
     const user = firebase.auth().currentUser
 
@@ -24,7 +24,7 @@ function FindTutor () {
     }
 }
 
-export default FindTutor
+export default FindMentor
 
 const styles = StyleSheet.create({
     container: {

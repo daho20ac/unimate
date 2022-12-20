@@ -11,7 +11,8 @@ import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
 import WelcomePage from './components/pages/WelcomePage';
 import InformationPage from './components/pages/InformationPage';
-import FindTutor from './components/pages/FindTutor';
+import FindMentor from './components/pages/FindMentor';
+import BecomeMentor from './components/pages/BecomeMentor';
 
 
 import { initializeApp } from "firebase/app";
@@ -72,8 +73,9 @@ export default function App() {
         <NavigationContainer>
           <Tab.Navigator screenOptions={{headerShown: false}}>
             <Tab.Screen name={"Information"} component={InformationPage} />
-            <Tab.Screen name={"Find Tutor"} component={FindTutor}/>
+            <Tab.Screen name={"Find Mentor"} component={FindMentor}/>
             <Tab.Screen name={"Welcome"} component={WelcomePage}/>
+            <Tab.Screen name={"Become a Mentor"} component={BecomeMentor} />
           </Tab.Navigator>
         </NavigationContainer>
     
