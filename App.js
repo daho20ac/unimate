@@ -9,6 +9,9 @@ import 'firebase/storage'
 //Components
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
+import WelcomePage from './components/pages/WelcomePage';
+import InformationPage from './components/pages/InformationPage';
+import FindTutor from './components/pages/FindTutor';
 
 
 import { initializeApp } from "firebase/app";
@@ -59,16 +62,21 @@ export default function App() {
       return (
         <NavigationContainer>
           <Tab.Navigator screenOptions={{headerShown: false}}>
-            <Tab.Screen name={"Login to UniMate"} component={LoginForm} />
-            <Tab.Screen name={"Sign up for UniMate"} component={SignUpForm} />
+            <Tab.Screen name={"Login"} component={LoginForm} />
+            <Tab.Screen name={"Sign up"} component={SignUpForm} />
           </Tab.Navigator>
         </NavigationContainer>
     );
     } else {
       return (
-        <View style={styles.container}>
-          <Text>{user.email} are logged in</Text>
-        </View>
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={{headerShown: false}}>
+            <Tab.Screen name={"Information"} component={InformationPage} />
+            <Tab.Screen name={"Find Tutor"} component={FindTutor}/>
+            <Tab.Screen name={"Welcome"} component={WelcomePage}/>
+          </Tab.Navigator>
+        </NavigationContainer>
+    
       )
     }
 }

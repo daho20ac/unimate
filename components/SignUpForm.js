@@ -2,10 +2,28 @@ import { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, Button, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import firebase from 'firebase/compat';
-import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { Dropdown } from 'react-native-element-dropdown'
 
 
+
+//Universiteter
+const Universities = [
+  { label: 'Copenhagen Business School', value: 'Copenhagen Business School' },
+  { label: 'University of Copenhagen', value: 'University of Copenhagen' },
+];
+
+//CBS Uddannelser
+const cbsEducations = [
+  { label: 'HA. IT', value: 'HA. IT' },
+  { label: 'HA. Almen', value: 'HA. Almen'}
+];
+
+//KU Uddannelser
+const kuEducations = [
+  { label: 'Medicin', value: 'Medicin' },
+  { label: 'Jura', value: 'Jura' },
+];
 
 
 
@@ -17,12 +35,12 @@ function SignUpForm() {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [type, setType] = useState('')
-  const [education, setEducation] = useState('')
   const [occupation, setOccupation] = useState('')
   const [bio, setBio] = useState('')
-
   const [image, setImage] = useState(null);
-
+  const [university, setUniversity] = useState(null);
+  const [education, setEducation] = useState(null);
+  const [select, setSelect] = useState(false);
   const [isCompleted, setCompleted] = useState(false) 
 
 
@@ -108,13 +126,6 @@ function SignUpForm() {
         style={styles.inputField}
       />
 
-      <TextInput
-        placeholder="education"
-        value={education}
-        onChangeText={(education) => setEducation(education)}
-        style={styles.inputField}
-      />
-
     <TextInput
         placeholder="occupation"
         value={occupation}
@@ -130,16 +141,38 @@ function SignUpForm() {
       />
     </View>
   
-    <Picker
-        selectedValue={type}
-        style={styles.pickerContainer}
-        onValueChange={(itemValue, itemIndex) => setType(itemValue)}
-        mode="dropdown"
-      >
-        <Picker.Item label="Student" value="student" />
-        <Picker.Item label="Tutor" value="tutor" />
-    </Picker>
+  
 
+<Dropdown 
+                    placeholderStyle={styles.placeholderStyle} 
+                    selectedTextStyle={styles.selectedTextStyle} 
+                    maxHeight={300} 
+                    labelField="label" valueField='value'
+                    value={university}
+                    placeholder='--SELECT--' 
+                    style={styles.dropdown} data={Universities} 
+                    onChange={item => 
+                    {
+                      setUniversity(item.value)
+                      setSelect(true)
+                  }}/>
+
+{university &&<Dropdown
+                    data={university == 'Copenhagen Business School' ? cbsEducations : kuEducations}
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={'--Select--'}
+                    searchPlaceholder="Search..."
+                    value={education}
+                    onChange={item => {
+                        setEducation(item.value);
+                    }}
+                />
+                  }
 
     <View style={styles.buttonContainer}>
 
@@ -169,6 +202,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    dropdown: {
+      height: 50,
+      borderColor: 'gray',
+      borderWidth: 0.5,
+      borderRadius: 8,
+      paddingHorizontal: 8,
+      width: '70%'
+  },
     scrollViewContainer: {
         marginTop: 100
     },
@@ -236,5 +277,19 @@ const styles = StyleSheet.create({
       marginBottom: 100,
       flex: 1,
       marginTop: -40
-    }
+    },
+    placeholderStyle: {
+      fontSize: 16,
+  },
+  selectedTextStyle: {
+      fontSize: 16,
+  },
+  timeDropdown: {
+      marginTop:10,
+  },
+  leaveType: {
+      fontSize:17,
+      fontWeight:'600',
+      marginBottom:5,
+  },
   });
