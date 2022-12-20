@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import firebase from 'firebase/compat';
+import 'firebase/storage'
 
 //Components
 import LoginForm from './components/LoginForm';
@@ -65,7 +66,7 @@ export default function App() {
     );
     } else {
       return (
-        <View>
+        <View style={styles.container}>
           <Text>{user.email} are logged in</Text>
         </View>
       )
