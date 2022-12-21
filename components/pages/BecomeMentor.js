@@ -46,8 +46,6 @@ function BecomeMentor () {
             }
             
         },[])
-
-
         //Funtkion der håndterer logikken når der trykkes på 'Create User'
         const handleSubmit = () => {
         firebase.database().ref('users/' + user.uid).set({

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, Button} from 'react-native';
+import { View, TextInput, StyleSheet, Text, Button, Image, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import firebase from 'firebase/compat';
 import { ScrollView } from 'react-native-gesture-handler';
-
-
 
 
 
@@ -32,29 +30,43 @@ function LoginForm() {
 
 //Der returneres et view hvor man kan skrive sin mail, password og en knap hvor man kan trykke logind.
   return (
-
-    <View style={styles.container}>
-      <Text style={styles.header}>Login</Text>
-
-      <TextInput 
-        placeholder="email"
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-        style={styles.inputField}
-      />
-
-      <TextInput 
-        secureTextEntry={true}
-        placeholder="password"
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        style={styles.inputField}
-      />
-
-      <View style={styles.submit}>
-        <Button color='orange' title="Login" onPress={handleSubmit} />
+    <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+      <View style={styles.TopSectionContainer}>
+        <View style={styles.TopSection}>
+        <Image style={styles.Logo}
+            source={require('../assets/UniMate.png')}
+        />
+        </View>
       </View>
-    </View>
+
+
+      <View style={styles.BottomSectionContainer}>
+        <View style={styles.BottomSection}>
+
+          <View style={styles.LoginContainer}>
+            <TextInput 
+            placeholder="email"
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+            style={styles.inputField}
+            />
+
+            <TextInput 
+            secureTextEntry={true}
+            placeholder="password"
+            value={password}
+            onChangeText={(password) => setPassword(password)}
+            style={styles.inputField}
+            />
+
+            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+
+          </View>
+        </View>
+      </View>
+      </KeyboardAvoidingView>
   )
 
 
@@ -62,32 +74,77 @@ function LoginForm() {
 
 export default LoginForm
 
-//Styling
 const styles = StyleSheet.create({
-  error: {
-    color: 'red'
+// Styling til keyboard avoid view
+  container: {
+    flex: 1,
   },
+
+// Styling til den kurvet baggrund
+  TopSectionContainer: {
+    backgroundColor: 'white',
+    flex: 6,
+    },
+
+  TopSection: {
+    backgroundColor: '#06A77D',
+    flex: 1,
+    borderBottomRightRadius: 75,
+    },
+
+    BottomSectionContainer: {
+      backgroundColor: '#06A77D',
+      flex: 8,
+    },
+
+  BottomSection: {
+    backgroundColor: 'white',
+    flex: 1,
+    borderTopLeftRadius: 75,
+  },
+
+// Styling til logo som ligger i Top Section
+  Logo: {
+    marginTop: 75,
+    height: 200,
+    width: 220,
+    alignSelf: 'center',
+  },
+
+// Styling til login sektionen
+  LoginContainer: {
+    marginTop: 125,
+    width: '85%',
+    alignSelf: 'center',
+  },
+
   inputField: {
     borderWidth: 1,
     margin: 10,
+    borderRadius: 10,
     padding: 10,
-    width: 200
-    
+
   },
-  header: {
-    fontSize: 40,
+
+  button: {
+    backgroundColor: '#0782F9',
+    width: '85%',
+    alignSelf: 'center',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 10
   },
-  submit: {
-    borderWidth: 1,
-    width: 100,
-    margin: 5,
-    alignItems: 'center',
-    backgroundColor: 'black',
-    justifyContent: 'center',
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    alignSelf: 'center',
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
+
+// Ved ikke hvad det er til - Error message måske?
+  error: {
+    color: 'red'
   },
 
 })
