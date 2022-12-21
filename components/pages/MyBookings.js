@@ -44,22 +44,35 @@ function MyBookings ({navigation}) {
 
         return (
             <View style={styles.container}>
-            <FlatList 
+                <View style={styles.topContainer}>
+                    <Text style={styles.header}>Here you can view your bookings.</Text>
+                </View>
+                <View style={styles.listContainer}>
+            <FlatList
                 data={bookingArray}
                 keyExtractor={(item, index) => bookingKeys[index]}
                 renderItem={({item, index}) => {
                     return (
                         <View>
-                        <TouchableOpacity onPress={() => selectBooking(bookingKeys[index])}>
-                            <Text>
-                                Name: {item.name} Duration: {item.hours} hr {item.minutes} min. Price: {item.price}
+                        <TouchableOpacity style={styles.listElement} onPress={() => selectBooking(bookingKeys[index])}>
+                            <View style={styles.textContainer}>
+                            <Text style={styles.text}>
+                                Name: {item.name}
                             </Text>
+                            <Text style={styles.text}>
+                                Duration: {item.hours} hr {item.minutes} min.
+                            </Text>
+                            <Text style={styles.text}>
+                                Price: {item.price}
+                            </Text>
+                            </View>
                         </TouchableOpacity>
                         </View>
                     )
-                }}
-            
+                }}         
             />
+            </View>
+
             </View>
         )
     } else {
@@ -74,23 +87,37 @@ export default MyBookings
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: 'white'
+    },
+    topContainer: {
+        height: '10%',
+        width: '95%',
+        alignSelf: 'center',
+        paddingTop: 10
+    },
+    header: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    listContainer: {
+        width: '85%',
+        alignSelf: 'center',
+        height: '100%'
+
+    },
+    listElement: {
+        backgroundColor: '#06A77D',
+        height: 75,
+        marginBottom: 25,
+        borderRadius: 50,
         alignItems: 'center',
-        justifyContent: 'center',
-      },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginBottom: 10
-      },
-      buttonText: {
-        color: '#fff',
-        fontSize: 18
-      },
-      text: {
-        marginTop: 150
-      }
+        justifyContent: 'center'
+    },
+    text: {
+        color: 'white'
+    },
+    textContainer: {
+        width: '85%',
+        alignItems: 'center'
+    }
   });

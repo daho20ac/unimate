@@ -9,11 +9,7 @@ function MentorDetails ({route, navigation}) {
 
     const user = firebase.auth().currentUser
 
-
     //Date picker
-    //const [mode, setMode] = useState('date')
-    //const [show, setShow] = useState(false)
-    //const [text, setText] = useState('Empty')
     const [startingTime, setStartingTime] = useState(new Date())
     const [endingTime, setEndingTIme] = useState(new Date())
     const [hours, setHours] = useState()
@@ -23,28 +19,6 @@ function MentorDetails ({route, navigation}) {
 
     //Mentor
     const [mentor, setMentor] = useState({})
-/*
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios')
-        setDate(currentDate);
-
-        let tempDate = new Date(currentDate)
-        let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-        let fTime = 'Hours: ' + tempDate.getHours() + ' | Minutes: ' + tempDate.getMinutes();
-        
-        setText(fDate + '\n' + fTime)
-        
-        console.log(fDate + '(' + fTime + ')')
-    }
-
-
-    const showMode = (currenMode) => {
-        setShow(true);
-        setMode(currenMode)
-
-    }
-*/
 
     const calculateDuration = () => {
         const duration = Math.abs(endingTime - startingTime) / 3600000;
@@ -77,6 +51,11 @@ function MentorDetails ({route, navigation}) {
     }
 
     const makeBooking = () => {
+        const dates = startingTime.getDate()
+        const month = startingTime.getMonth() + 1
+        const year = startingTime.getFullYear()
+        const date = `${dates}/${month}/${year}`
+
         firebase.database().ref('/bookings/').push({
             bookerID: user.uid,
             name: mentor.name,
@@ -84,8 +63,7 @@ function MentorDetails ({route, navigation}) {
             education: mentor.education,
             occupation: mentor.occupation,
             bio: mentor.bio,
-            startingTime: startingTime,
-            endingTime: endingTime,
+            date: date,
             hours: hours,
             minutes: minutes,
             price: price
@@ -97,9 +75,6 @@ function MentorDetails ({route, navigation}) {
             alert(errorCode, errorMessage)
           })
     }
-
-
-
 
     useEffect(() => {
         route.params.mentor.courses = route.params.mentor.courses.toString()

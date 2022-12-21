@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import firebase from 'firebase/compat';
 import 'firebase/storage'
 
@@ -65,8 +65,21 @@ export default function App() {
       return (
         <NavigationContainer>
           <Tab.Navigator screenOptions={{headerShown: false}}>
-            <Tab.Screen name={"Login"} component={LoginForm} />
-            <Tab.Screen name={"Sign up"} component={SignUpForm} />
+            <Tab.Screen options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/Login.png')}/>
+                )
+              }
+            }} name={"Login"} component={LoginForm} />
+            <Tab.Screen
+            options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/SignUp.png')}/>
+                )
+              }
+            }} name={"Sign up"} component={SignUpForm} />
           </Tab.Navigator>
         </NavigationContainer>
     );
@@ -74,10 +87,37 @@ export default function App() {
       return (
         <NavigationContainer>
           <Tab.Navigator screenOptions={{headerShown: false}}>
-            <Tab.Screen name={"Welcome"} component={WelcomePage}/>
-            <Tab.Screen name={"Find Mentor"} component={StackNavigation}/>
-            <Tab.Screen name={"Become a Mentor"} component={BecomeMentor} />
-            <Tab.Screen name={"Bookings"} component={BookingStack} />
+            <Tab.Screen options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/Home.png')}/>
+                )
+              }
+            }} name={"Welcome"} component={WelcomePage}/>
+            <Tab.Screen
+            options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/FindMentor.png')}/>
+                )
+              }
+            }} name={"Find Mentor"} component={StackNavigation}/>
+            <Tab.Screen 
+            options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/Mentor.png')}/>
+                )
+              }
+            }}name={"Become a Mentor"} component={BecomeMentor} />
+            <Tab.Screen 
+            options={{
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Image style={styles.icon} source={require('./assets/Bookings.png')}/>
+                )
+              }
+            }}name={"Bookings"} component={BookingStack} />
           </Tab.Navigator>
         </NavigationContainer>
     
@@ -92,4 +132,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  icon: {
+    height: 25,
+    width: 25
+  }
 });

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Text, Button, Touchable} from 'react-native';
 import firebase from 'firebase/compat';
 import SignUpForm from '../SignUpForm'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { MultiSelect } from 'react-native-element-dropdown';
 
 
@@ -68,11 +68,15 @@ function BecomeMentor () {
   }
         
         return (
+            <ScrollView>
             <View style={styles.container}>
-                <Text>
-                    Hello {userProfile.name}! Here you can sign up to become a mentor!
-                    Firstly, we need some more information about you! 
+                <Text style={styles.header}>
+                    Hello {userProfile.name}!  
                 </Text>
+                <View style={styles.textContainer}>
+                <Text style={styles.infoText}>Here you can sign up to become a mentor!</Text>
+                <Text style={styles.infoText}>But first, we need some more information about you!</Text>
+                </View>
             <View style={styles.inputContainer}>
                 <TextInput 
                     style={styles.inputField}
@@ -107,6 +111,7 @@ function BecomeMentor () {
             </View>
 
             </View>
+            </ScrollView>
         )
     } else {
         return (
@@ -120,36 +125,39 @@ export default BecomeMentor
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: 100,
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      height: 750
     },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
+    inputField: {
+        borderWidth: 1,
+        margin: 10,
         borderRadius: 10,
-        alignItems: 'center',
-        marginBottom: 10
+        padding: 10,
+    
+      }, 
+      header: {
+        marginLeft: '5%',
+        fontSize: 25,
+        fontWeight: "bold"
       },
       buttonText: {
         color: '#fff',
-        fontSize: 18
+        fontSize: 18,
+        alignSelf: 'center',
       },
-      inputField: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        marginBottom: 10,
-        fontSize: 16,
-        borderRadius: 10
+      textContainer: {
+        marginTop: 25,
+        padding: '5%'
       },
       inputContainer: {
-        width: '80%',
-        marginTop: 10
-    },
+        width: '85%',
+        alignSelf: 'center',
+      },
     dropdown: {
         height: 50,
+        width: '95%',
+        alignSelf: 'center',
         backgroundColor: 'white',
         borderRadius: 12,
         padding: 12,
@@ -160,8 +168,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 1.41,
-
         elevation: 2,
+        textAlign: 'center',
+        marginTop: 10
+        
     },
     placeholderStyle: {
         fontSize: 16,
@@ -212,11 +222,13 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#0782F9',
-        width: '100%',
+        width: '85%',
+        alignSelf: 'center',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 40,
       },
       buttonText: {
         color: '#fff',

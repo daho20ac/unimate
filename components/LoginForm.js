@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 
 // Styling til login sektionen
   LoginContainer: {
-    marginTop: 125,
+    marginTop: 75,
     width: '85%',
     alignSelf: 'center',
   },

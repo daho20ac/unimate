@@ -68,61 +68,70 @@ function FindMentor ({navigation}) {
 
         return (
             <View style={styles.container}>
-                <Text>
-                    Here you can find a mentor to help you in your course.
-                    You can use the filter to search for specific courses.
-                </Text>
-                <MultiSelect
-                style={styles.dropdown}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={courseData}
-                labelField="label"
-                valueField="value"
-                placeholder="--select courses--"
-                value={filteredCourses}
-                search={true}
-                searchPlaceholder="Search..."
-                onChange={items => {
-                    setFilteredCourses(items);
-                        firebaseUserRef.on("value", (snapshot) => {
-                            let data = snapshot.val();
-                            const mentors = Object.values(data).filter(user => user.hourlyWage != undefined)
-                            
-                            let filteredProfiles = []
+                <View style={styles.TopContainer}>
+                    <Text style={styles.headerText}>Find your mentor</Text>
+                    <Text style={styles.bodyText}>
+                        Here you can find a mentor to help you in your course.
+                        You can use the filter to search for a specific course. 
+                        Click on the mentor if you wish to book.
+                    </Text>
+                </View>
 
-                            for(let i = 0; i < items.length; i++) {
-                                const test = mentors.filter(mentor => mentor.courses.includes(items[i]))
-                                filteredProfiles.push(...test)
-                            }
+                <View style={styles.multiSelectContainer}>
+                    <MultiSelect
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={courseData}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="--select courses--"
+                    value={filteredCourses}
+                    search={true}
+                    searchPlaceholder="Search..."
+                    onChange={items => {
+                        setFilteredCourses(items);
+                            firebaseUserRef.on("value", (snapshot) => {
+                                let data = snapshot.val();
+                                const mentors = Object.values(data).filter(user => user.hourlyWage != undefined)
+                                
+                                let filteredProfiles = []
 
-                            let unique = filteredProfiles.filter((value, index) => {
-                                const _value = JSON.stringify(value);
-                                return index === filteredProfiles.findIndex(obj => {
-                                  return JSON.stringify(obj) === _value;
+                                for(let i = 0; i < items.length; i++) {
+                                    const test = mentors.filter(mentor => mentor.courses.includes(items[i]))
+                                    filteredProfiles.push(...test)
+                                }
+
+                                let unique = filteredProfiles.filter((value, index) => {
+                                    const _value = JSON.stringify(value);
+                                    return index === filteredProfiles.findIndex(obj => {
+                                    return JSON.stringify(obj) === _value;
+                                    });
                                 });
-                              });
-                            setMentorProfiles(unique)
-                        })
-                }} />
-                {
+                                setMentorProfiles(unique)
+                            })
+                    }} />
+                    {
                 <FlatList 
             data={mentorArray}
             keyExtractor={(item, index) => mentorKeys[index]}
             renderItem={({ item, index }) => {
                return (
-                <TouchableOpacity onPress={() => selectMentor(mentorKeys[index])}>
-                    <Text>
-                        Name: {item.name} Education: {item.Education} University: {item.University} Hourly Wage: {item.Education} Courses: {item.courses}
-                    </Text>
+                <TouchableOpacity style={styles.listElement} onPress={() => selectMentor(mentorKeys[index])}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>
+                            Name: {item.name} Education: {item.education} University: {item.university} Hourly Wage: {item.hourlyWage} Courses: {item.courses}
+                        </Text>
+                    </View>
                 </TouchableOpacity>
                )
             }}
         />
         }
 
+                </View>
                 
             </View>
             
@@ -139,38 +148,35 @@ function FindMentor ({navigation}) {
 export default FindMentor
 
 const styles = StyleSheet.create({
+
     container: {
       flex: 1,
-      marginTop: 50,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
+
+// Styling til top section
+    TopContainer: {
+        marginTop: 15,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+
+    headerText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+      },
+
+    bodyText: {
+        marginTop: 10,
+      },
+
+// Styling til multiSelect
+    multiSelectContainer: {
+        marginTop: 20,
         alignItems: 'center',
-        marginBottom: 10
+        flex: 1,
       },
-      buttonText: {
-        color: '#fff',
-        fontSize: 18
-      },
-      inputField: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        marginBottom: 10,
-        fontSize: 16,
-        borderRadius: 10
-      },
-      inputContainer: {
-        width: '80%',
-        marginTop: 10
-    },
-    dropdown: {
+
+      dropdown: {
         height: 50,
         width: 250,
         backgroundColor: 'white',
@@ -183,67 +189,52 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 1.41,
-
         elevation: 2,
     },
+
     placeholderStyle: {
         fontSize: 16,
     },
+
     selectedTextStyle: {
         fontSize: 14,
     },
+
     iconStyle: {
         width: 20,
         height: 20,
     },
+
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
     },
-    icon: {
-        marginRight: 5,
-    },
-    item: {
-        padding: 17,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    selectedStyle: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 14,
-        backgroundColor: 'white',
-        shadowColor: '#000',
-        marginTop: 8,
-        marginRight: 12,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 1.41,
 
-        elevation: 2,
-    },
-    textSelectedStyle: {
-        marginRight: 5,
-        fontSize: 16,
-    },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
+
+// Styling af flat list text
+
+    listElement: {
+        backgroundColor: '#06A77D',
+        height: 75,
+        marginTop: 18,
+        borderRadius: 50,
         alignItems: 'center',
-        marginBottom: 10
-      },
-      buttonText: {
-        color: '#fff',
-        fontSize: 18
-      },
+        justifyContent: 'center'
+    },
+
+    textContainer: {
+        width: '90%',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+    },
+
+    text: {
+        color: 'white'
+    },
+
+
+
+
+
   });
 
