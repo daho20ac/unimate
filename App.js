@@ -13,6 +13,8 @@ import WelcomePage from './components/pages/WelcomePage';
 import FindMentor from './components/pages/FindMentor';
 import BecomeMentor from './components/pages/BecomeMentor';
 import StackNavigation from './components/navigation/StackNavigator';
+import MyBookings from './components/pages/MyBookings';
+import BookingStack from './components/navigation/BookingStack'; 
 
 
 import { initializeApp } from "firebase/app";
@@ -75,6 +77,7 @@ export default function App() {
             <Tab.Screen name={"Welcome"} component={WelcomePage}/>
             <Tab.Screen name={"Find Mentor"} component={StackNavigation}/>
             <Tab.Screen name={"Become a Mentor"} component={BecomeMentor} />
+            <Tab.Screen name={"Bookings"} component={BookingStack} />
           </Tab.Navigator>
         </NavigationContainer>
     

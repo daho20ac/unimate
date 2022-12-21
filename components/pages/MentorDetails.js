@@ -77,7 +77,7 @@ function MentorDetails ({route, navigation}) {
     }
 
     const makeBooking = () => {
-        firebase.database().ref('bookings/').set({
+        firebase.database().ref('/bookings/').push({
             bookerID: user.uid,
             name: mentor.name,
             university: mentor.university,
@@ -108,7 +108,7 @@ function MentorDetails ({route, navigation}) {
     })
     if(!mentor) {
         return (
-            <Text>No Tool was found</Text>
+            <Text>No mentor was found</Text>
         )
     }
     
