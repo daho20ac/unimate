@@ -65,6 +65,9 @@ function MyBookings ({navigation}) {
                             <Text style={styles.text}>
                                 Price: {item.price}
                             </Text>
+                            <Text style={styles.text}>
+                                Date: {item.date}
+                            </Text>
                             </View>
                         </TouchableOpacity>
                         </View>
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     },
     listElement: {
         backgroundColor: '#06A77D',
-        height: 75,
+        height: 80,
         marginBottom: 25,
         borderRadius: 50,
         alignItems: 'center',

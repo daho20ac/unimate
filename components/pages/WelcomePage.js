@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Text, Button, Touchable} from 'react-native';
 import firebase from 'firebase/compat';
 import SignUpForm from '../SignUpForm'
@@ -8,13 +8,34 @@ function WelcomePage () {
 
     const user = firebase.auth().currentUser
 
+
     if(user) {
+        const [userProfile, setUserProfile] = useState() 
+
+     useEffect(() => {
+        if(!userProfile) {
+            const firebaseUserRef = firebase.database().ref('/users/' + user.uid);
+            firebaseUserRef.once('value', (snapshot) => {
+                let data = snapshot.val()
+                setUserProfile(data)
+        }, [])
+
+        }
+    })
+
+    if(!userProfile) {
+        return (
+            <View style={styles.container}>
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
         return (
             <ScrollView>
             <View style={styles.container}>
 
                 <View style={styles.headerOneContainer}>
-                    <Text style={styles.Title}>Welcome {user.email}!</Text>
+                    <Text style={styles.Title}>Welcome {userProfile.name}!</Text>
                 </View>
 
                 <View style={styles.bodyContainer}>

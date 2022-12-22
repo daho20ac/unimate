@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Text, Button, Touchable, Platform} from 'react-native';
 import firebase from 'firebase/compat';
 import SignUpForm from '../SignUpForm'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 function MentorDetails ({route, navigation}) {
@@ -90,36 +90,43 @@ function MentorDetails ({route, navigation}) {
     if(user) {
 
         return (
-            <View>
+            <View style={styles.container}>
+
+
+                <ScrollView style={styles.bodyContainer}>
                 {
-            Object.entries(mentor).map((item,index)=>{
-                return(
-                    <View key={index} style={styles.container}>
-                        <Text>{item[0]}: </Text>
-                        <Text >{item[1]}</Text>
+                Object.entries(mentor).map((item,index)=>{
+                    return(
+                        <View key={index} style={styles.inputContainer}>
+                            <Text style={styles.label}>{item[0]}: </Text>
+                            <Text >{item[1]}</Text>
+                        </View>
+                    )                
+               })
+               }
+                <View style={styles.timeContainer}>
+                    <Text style={styles.timeText}>Pleae select a starting time</Text>
+                    <DateTimePicker style={styles.timePicker} value={startingTime} mode="datetime" onChange={onChangeStart} timeZoneOffsetInMinutes={0} minuteInterval={15}/>
+                    <Text style={styles.timeText}>Pleae select an ending time</Text>
+                    <DateTimePicker style={styles.timePicker} value={startingTime} mode="time" onChange={onChangeEnd} timeZoneOffsetInMinutes={0} minuteInterval={15}/>
+
+                    <View style={styles.priceContainer}>
+                        <Text style={styles.priceText}>Total Price: {price}</Text>
+                        <Text style={styles.priceText}>{hours} hr {minutes} min.</Text>
                     </View>
-        
-                )
-                
-            })
-        }
-        
-            <View>
-                <Text>Pleae select a starting time</Text>
-                <DateTimePicker value={startingTime} mode="datetime" onChange={onChangeStart} timeZoneOffsetInMinutes={0} minuteInterval={15}/>
-                <Text>Pleae select an ending time</Text>
-                <DateTimePicker value={startingTime} mode="time" onChange={onChangeEnd} timeZoneOffsetInMinutes={0} minuteInterval={15}/>
+                </View>
 
-                <Text>Total Price: {price}</Text>
-                <Text>{hours} hr {minutes} min.</Text>
+                </ScrollView>
 
 
-            </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={makeBooking} style={styles.button}>
+                    <Text  style={styles.buttonText}>Make booking</Text>
+                    </TouchableOpacity>
+                </View>
 
 
-                <TouchableOpacity style={styles.button} onPress={makeBooking}>
-                    <Text style={styles.buttonText}>Make Booking</Text>
-                </TouchableOpacity>
+
             </View>
         )
     } else {
@@ -133,25 +140,92 @@ export default MentorDetails
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#06A77D',
+    },
+
+    topContainer: {
+
+    },
+
+    HeaderText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 30,
+        marginTop: 10,
+    },
+
+    bodyContainer: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        width: '85%',
+        alignSelf: 'center',
+        marginTop: 10,
+        padding: 10,
+        marginBottom: 10,
+    },
+
+    inputContainer: {
         flexDirection: 'row',
-        width: '80%',
-        margin: 5,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'flex-start',
+        marginTop: 10,
     },
+
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginBottom: 10
-      },
-      buttonText: {
-        color: '#fff',
-        fontSize: 18
-      },
+
+// Time text styling
+    timeContainer: {
+        marginTop: 30,
+    },    
+    timeText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+
+    },
+
+    timePicker: {
+        alignSelf: 'flex-start',
+    },
+
+// Price text styling
+
+    priceContainer: {
+        marginTop: 50,
+        alignItems: 'center'
+    },
+
+    priceText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+
+    },
+
+    // Styles til create knappen i bunden (også lidt til insert picture knap)
+  buttonContainer: {
+    backgroundColor: 'white',
+    width: '100%',
+    alignSelf: 'center',
+    height: 'auto',
+  },
+
+  button: {
+    backgroundColor: '#0782F9',
+    width: '80%',
+    alignSelf: 'center',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 10
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    alignSelf: 'center',
+  },
+
+
   });

@@ -122,7 +122,19 @@ function FindMentor ({navigation}) {
                 <TouchableOpacity style={styles.listElement} onPress={() => selectMentor(mentorKeys[index])}>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>
-                            Name: {item.name} Education: {item.education} University: {item.university} Hourly Wage: {item.hourlyWage} Courses: {item.courses}
+                            Name: {item.name}
+                        </Text>
+                        <Text style={styles.text}>
+                           Education: {item.education}
+                        </Text>
+                        <Text style={styles.text}>
+                            University: {item.university}
+                        </Text>
+                        <Text style={styles.text}>
+                            Hourly Wage: {item.hourlyWage}
+                        </Text>
+                        <Text style={styles.text}>
+                            Courses: {item.courses}
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -215,17 +227,17 @@ const styles = StyleSheet.create({
 
     listElement: {
         backgroundColor: '#06A77D',
-        height: 75,
+        height: 135,
         marginTop: 18,
         borderRadius: 50,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100%'
     },
 
     textContainer: {
-        width: '90%',
+        width: '95%',
         alignItems: 'center',
-        flexWrap: 'wrap',
     },
 
     text: {

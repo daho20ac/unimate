@@ -71,7 +71,7 @@ function BecomeMentor () {
             <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.header}>
-                    Hello {userProfile.name}!  
+                    {userProfile.name}, want to become a mentor?  
                 </Text>
                 <View style={styles.textContainer}>
                 <Text style={styles.infoText}>Here you can sign up to become a mentor!</Text>
