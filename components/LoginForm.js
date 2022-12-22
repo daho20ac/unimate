@@ -15,8 +15,9 @@ function LoginForm() {
 //Funktion der håndterer logikken når der trykkes "login" på siden.
   const handleSubmit = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
+
     .catch(function(error) {
-    // Handle Errors here.
+    //Errorhandling herunder
     var errorCode = error.code;
     var errorMessage = error.message;
     if (errorCode === 'auth/wrong-password') {

@@ -42,8 +42,7 @@ function SignUpForm() {
   const [isCompleted, setCompleted] = useState(false) 
 
 
-//vælge billede
-
+//Funktion der gør man kan vælge profilbillede fra sin telefon
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -57,7 +56,7 @@ function SignUpForm() {
         setImage(result.assets[0].uri);
       }
     };
-
+//Funktion der skulle uploade profilbillede til storage (Virker ikke i nuværende iteration)
     const uploadImage = async () => {
       const uploadUri = image;
       let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1)
@@ -73,6 +72,7 @@ function SignUpForm() {
 //Funtkion der håndterer logikken når der trykkes på 'Create User'
   const handleSubmit = () => {
     const auth = getAuth();
+    //Authentication i firebase oprettes
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
@@ -88,6 +88,7 @@ function SignUpForm() {
         alert('User created successfully')
 
       })
+      //Errorhandlin g
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -95,7 +96,7 @@ function SignUpForm() {
       });
   }
 
-  //Der returneres et view hvor man kan skrive sin mail og password som man vil have oprettet som bruger. 
+  //Der returneres et view hvor man kan udfylde forskellige felter til oprettelse af. 
   return (
     <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
 

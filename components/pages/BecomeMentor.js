@@ -5,7 +5,7 @@ import SignUpForm from '../SignUpForm'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { MultiSelect } from 'react-native-element-dropdown';
 
-
+//Data for de foskellige fag.
 const courseData = [
     { label: "VØS 1", value:"VØS 1" },
     { label: "Makroøkonomi", value:"Makroøkonomi" },
@@ -26,9 +26,13 @@ const courseData = [
 
 function BecomeMentor () {
 
+    //Brugerens authentication oplysninger hentes
     const user = firebase.auth().currentUser
 
+    //Hvis brugeren er logget ind
     if(user) {
+
+        //Firebase realtime database referencer
         const firebaseUserRef = firebase.database().ref('/users/' + user.uid);
         const firebaseMentorRef = firebase.database().ref('/mentors/' + user.uid);
 
@@ -46,8 +50,9 @@ function BecomeMentor () {
             }
             
         },[])
-        //Funtkion der håndterer logikken når der trykkes på 'Create User'
+        //Funtkion der håndterer logikken når der trykkes på 'Become mentor!'
         const handleSubmit = () => {
+            //Mentoroplysninger pushes til firebase databasen
         firebase.database().ref('users/' + user.uid).set({
           name: userProfile.name,
           university: userProfile.university,
@@ -66,7 +71,8 @@ function BecomeMentor () {
         alert(errorCode, errorMessage)
       });
   }
-        
+        // Der retuneres en side hvor man kan indskrive sin timeløn og fag man vil være mentor i.
+        //Man kan trykke 'Become Mentor' for at gøre sig selv til mentor i de pågældende fag.
         return (
             <ScrollView>
             <View style={styles.container}>

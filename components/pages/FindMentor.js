@@ -31,23 +31,14 @@ function FindMentor ({navigation}) {
     
     //Der tjekkes at der er logget ind
     if(user) {
-        //Ref til firebase
+
+        //Reference til firebase
         const firebaseUserRef = firebase.database().ref('/users/');
 
-        //const [userProfiles, setUserProfiles] = useState()
+        //De fundede mentorprofiler samt filterede courses
         const [mentorProfiles, setMentorProfiles] = useState([])
         const [filteredCourses, setFilteredCourses] = useState([])
         
-        //Find bruger profile i database
-       /*useEffect(() => {
-            if(!mentorProfiles) {
-                firebaseUserRef.on("value", (snapshot) => {
-                    let data = snapshot.val();
-                    const mentors = Object.values(data).filter(user => user.hourlyWage != undefined)
-                    setMentorProfiles(mentors)
-                })
-            }   
-        },[])*/
 
         if(!mentorProfiles) {
             return (
@@ -57,12 +48,13 @@ function FindMentor ({navigation}) {
             )
         }
 
+        //Logik for at trykke på en mentor i flatlisten
         const selectMentor = id => {
             const mentor = mentorProfiles[id]
             navigation.navigate('Mentor Details', { mentor})
         }
 
-        
+        //Arrays henholdvis med keys og værdier
         const mentorArray = Object.values(mentorProfiles)
         const mentorKeys = Object.keys(mentorProfiles)
 
@@ -92,6 +84,9 @@ function FindMentor ({navigation}) {
                     search={true}
                     searchPlaceholder="Search..."
                     onChange={items => {
+
+                        //Når man vælger et fag man skal bruge hjælp til, så finder filtreres alle mentorer, 
+                        //som er oprettet til at kunne underbise i netop det fag.
                         setFilteredCourses(items);
                             firebaseUserRef.on("value", (snapshot) => {
                                 let data = snapshot.val();
@@ -114,6 +109,8 @@ function FindMentor ({navigation}) {
                             })
                     }} />
                     {
+
+                        //Liste over det mentorer som bliver fundet i firebase realtime databasen. 
                 <FlatList 
             data={mentorArray}
             keyExtractor={(item, index) => mentorKeys[index]}
@@ -149,7 +146,7 @@ function FindMentor ({navigation}) {
             
         )
 
-        //Hvis brugeren ikke er logget ind kan 
+        //Hvis brugeren ikke er logget ind kommer vedkommende tilbage til signupsiden. 
     } else {
         return (
             <SignUpForm />

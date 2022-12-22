@@ -6,12 +6,14 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 function WelcomePage () {
 
+    //Authentication informationer hentes
     const user = firebase.auth().currentUser
 
 
     if(user) {
         const [userProfile, setUserProfile] = useState() 
 
+        //Brugerinformationer hentes fra firebase.
      useEffect(() => {
         if(!userProfile) {
             const firebaseUserRef = firebase.database().ref('/users/' + user.uid);
@@ -30,6 +32,7 @@ function WelcomePage () {
             </View>
         )
     }
+    //Der retunerenes en del information omkring UniMate.
         return (
             <ScrollView>
             <View style={styles.container}>

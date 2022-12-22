@@ -6,7 +6,7 @@ import BookingDetails from '../pages/BookingDetails';
 
 const Stack = createStackNavigator()
 
-//Husk at ændre navn
+//En stack for bookingslisten og booking details for den booking man vælger at trykke på.
 function BookingStack() {
     return (
       <Stack.Navigator>

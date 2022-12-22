@@ -9,7 +9,7 @@ function MentorDetails ({route, navigation}) {
 
     const user = firebase.auth().currentUser
 
-    //Date picker
+    //Date picker variable
     const [startingTime, setStartingTime] = useState(new Date())
     const [endingTime, setEndingTIme] = useState(new Date())
     const [hours, setHours] = useState()
@@ -17,9 +17,10 @@ function MentorDetails ({route, navigation}) {
     const [price, setPrice] = useState()
 
 
-    //Mentor
+    //Mentor som man har trykket på
     const [mentor, setMentor] = useState({})
 
+    //Funktion der bruges til at udregne tid og pris for det valgte start og sluttidspunkt.
     const calculateDuration = () => {
         const duration = Math.abs(endingTime - startingTime) / 3600000;
         const hours = Math.floor(duration)
@@ -37,25 +38,27 @@ function MentorDetails ({route, navigation}) {
         setPrice(fullPrice)
     }
 
-
+    //Funktion der invokes når man ændrer et starttidspunkt.
     const onChangeStart = (event, selectedDate) => {
         const currentDate = selectedDate || startingTime
         setStartingTime(currentDate)
         setEndingTIme(currentDate)
         calculateDuration()
     }
+     //Funktion der invokes når man ændrer et starttidspunkt.
     const onChangeEnd = (event, selectedDate) => {
         const currentDate = selectedDate || endingTime
         setEndingTIme(currentDate)
         calculateDuration()    
     }
-
+    //Funktion der behandler logikken for når der trykkes på "Make Booking"
     const makeBooking = () => {
         const dates = startingTime.getDate()
         const month = startingTime.getMonth() + 1
         const year = startingTime.getFullYear()
         const date = `${dates}/${month}/${year}`
 
+        //Vi tilføjer de relevante oplysninger til firebasedatabasen i en ny booking.
         firebase.database().ref('/bookings/').push({
             bookerID: user.uid,
             name: mentor.name,
@@ -68,14 +71,18 @@ function MentorDetails ({route, navigation}) {
             minutes: minutes,
             price: price
           }).then(() => {
+            //Hvis bookingen tilføjes til databasen får man en alert om at det er sket succesfuldt.
             alert(`You have succesfully booked ${mentor.name}. Duration is ${hours} hr ${minutes} min. and costs ${price}.`)
           }).catch(() => {
+            //errorhandli ng
             const errorCode = error.code;
             const errorMessage = error.message;
             alert(errorCode, errorMessage)
           })
     }
 
+
+    //Man tager tildeler mentor-variablen informationerne om den mentor man har trykket på i FindMentor listen.
     useEffect(() => {
         route.params.mentor.courses = route.params.mentor.courses.toString()
         setMentor(route.params.mentor)
@@ -88,6 +95,8 @@ function MentorDetails ({route, navigation}) {
     }
     
     if(user) {
+
+        //Der returneres en oversigt over mentorens brugereoplsyninger.
 
         return (
             <View style={styles.container}>

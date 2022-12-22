@@ -17,6 +17,7 @@ import MyBookings from './components/pages/MyBookings';
 import BookingStack from './components/navigation/BookingStack'; 
 
 
+
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -31,9 +32,11 @@ const firebaseConfig = {
 
 
 
-
+//Der oprettes en tab navigator
 const Tab = createBottomTabNavigator()
 
+
+//Logik der for når man er logget ind eller ud.
 function onAuthStateChange(callback) {
   return firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -54,6 +57,8 @@ export default function App() {
     //UseState bruges til at angive om en bruger er logget ind eller ej.
     const [user, setUser] = useState({loggedIn: false, email: null})
 
+
+
     useEffect(() => {
       const unsubscribe = onAuthStateChange(setUser);
       return () => {
@@ -61,6 +66,8 @@ export default function App() {
       };
     }, []);
 
+
+    //Hvis burugeren IKKE er logget ind så præsenteres den for en bottomnavigator med to pages til signUp og Login
     if(user.loggedIn == false) {
       return (
         <NavigationContainer>
@@ -84,6 +91,7 @@ export default function App() {
         </NavigationContainer>
     );
     } else {
+      //Hvis brugere er logget ind præsenteres den for 4 forskellige tabs: Welcome, FindMentor, Become a mentor og MyBookings.
       return (
         <NavigationContainer>
           <Tab.Navigator screenOptions={{headerShown: false}}>

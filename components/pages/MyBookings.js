@@ -23,9 +23,11 @@ function MyBookings ({navigation}) {
                 const firebaseUserRef = firebase.database().ref('/bookings/');
                 firebaseUserRef.on('value', (snapshot) => {
                     let data = snapshot.val()
-                    const myBookings = Object.values(data).filter(booking => booking.bookerID == user.uid)
+                    if(data) {
+                        const myBookings = Object.values(data).filter(booking => booking.bookerID == user.uid)
 
-                    setBookings(myBookings)
+                        setBookings(myBookings)
+                    }
             }, [])
 
             }

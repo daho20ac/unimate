@@ -6,7 +6,7 @@ import MentorDetails from '../pages/MentorDetails';
 
 const Stack = createStackNavigator()
 
-//Husk at ændre navn
+//En stack for mentorerlisten og mentor details for den mentor man vælger at trykke på.
 function StackNavigation() {
     return (
       <Stack.Navigator>

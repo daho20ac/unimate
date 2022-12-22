@@ -10,17 +10,11 @@ function BookingDetails ({route, navigation}) {
     const user = firebase.auth().currentUser
 
 
- 
-    const [startingTime, setStartingTime] = useState(new Date())
-    const [endingTime, setEndingTIme] = useState(new Date())
-    const [hours, setHours] = useState()
-    const [minutes, setMinutes] = useState()
-    const [price, setPrice] = useState()
-
-    //Booking
+    //Booking variable
     const [booking, setBooking] = useState({})
 
 
+    //useEffect til at sætte booking variable = med den booking man trykkede på. 
     useEffect(() => {
         
         delete route.params.booking.university
@@ -29,12 +23,15 @@ function BookingDetails ({route, navigation}) {
 
        return () => { setBooking({})}
     })
+    //Hvis der ikke er en booking
     if(!booking) {
         return (
             <Text>No booking was found</Text>
         )
     }
-    
+    //Der retuneres en side med information omkring den booking man trykkedepå
+    //Der er update og delete booking, samt contact seller knapper, som dog ikke virker i nuværende i iteration.
+    //Disse kan der arbejdes videre på i forbindelse med videreudvikling af programmet. 
     if(user) {
         return (
             
@@ -71,6 +68,7 @@ function BookingDetails ({route, navigation}) {
             </View>
         )
     } else {
+        //Hivsman ikke er logget i.
         return (
             <SignUpForm />
         )
